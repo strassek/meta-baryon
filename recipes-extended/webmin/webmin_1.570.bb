@@ -13,7 +13,8 @@ PR = "r1"
 
 SRC_URI = "${SOURCEFORGE_MIRROR}/webadmin/webmin-${PV}.tar.gz \
           file://setup.sh \
-          file://init-exclude.patch"
+          file://init-exclude.patch \
+          file://net-generic.patch"
 
 inherit allarch perlnative update-rc.d
 
