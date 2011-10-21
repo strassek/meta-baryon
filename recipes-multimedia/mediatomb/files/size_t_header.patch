@@ -1,0 +1,18 @@
+Add correct header for size_t type with new GCC version.
+
+Signed-off-by: Dongxiao Xu <dongxiao.xu@intel.com>
+
+Upstream-Status: Pending
+
+diff -ruN mediatomb-0.12.1-orig//src/zmm/object.h mediatomb-0.12.1/src/zmm/object.h
+--- mediatomb-0.12.1-orig//src/zmm/object.h	2011-10-21 13:23:48.091164003 +0800
++++ mediatomb-0.12.1/src/zmm/object.h	2011-10-21 13:24:39.461163999 +0800
+@@ -32,7 +32,7 @@
+ #ifndef __ZMM_OBJECT_H__
+ #define __ZMM_OBJECT_H__
+ 
+-#include <new> // for size_t
++#include <cstring> // for size_t
+ #include "atomic.h"
+ 
+ namespace zmm
