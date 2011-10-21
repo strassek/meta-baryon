@@ -1,0 +1,38 @@
+meta-baryon
+===========
+
+This layer provides support for building Baryon, a small Linux distribution
+focused on NAS devices primarily supporting the Intel Black Sand (N450
+development board).
+
+
+
+Dependencies
+------------
+
+This layer depends on the Poky metadata. For more information on Poky see
+the Yocto Project website:
+
+http://www.yoctoproject.org.
+
+Release edison-6.0 or later is required.
+
+
+
+Maintenance
+-----------
+
+This layer is maintained by the Yocto Project. Send patches / pull requests
+to yocto@yoctoproject.org with '[meta-baryon]' in the subject.
+
+
+
+License
+-------
+
+All metadata is MIT licensed unless otherwise stated. Source code included
+in tree for individual recipes is under the LICENSE stated in each recipe
+(.bb file) unless otherwise stated.
+
+This README document is Copyright (C) 2011 Intel Corporation.
+
