@@ -7,7 +7,7 @@ LIC_FILES_CHKSUM = "file://LICENCE;md5=0373ac9f611e542ddebe1ec6394afc3c"
 RDEPENDS_${PN} += "perl perl-module-socket perl-module-exporter perl-module-exporter-heavy perl-module-carp perl-module-strict"
 RDEPENDS_${PN} += "perl-module-warnings perl-module-warnings-register perl-module-xsloader perl-module-posix perl-module-autoloader"
 RDEPENDS_${PN} += "perl-module-fcntl perl-module-tie-hash perl-module-vars perl-module-time-local perl-module-config perl-module-constant"
-RDEPENDS_${PN} += "perl-module-file perl-module-file-glob perl-module-sdbm perl-module-sdbm-file"
+RDEPENDS_${PN} += "perl-module-file perl-module-file-glob perl-module-sdbm perl-module-sdbm-file perl-module-timelocal"
 
 PR = "r3"
 
