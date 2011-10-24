@@ -8,10 +8,14 @@ POKY_EXTRA_INSTALL = "samba procps mdadm e2fsprogs-mke2fs util-linux \
                      webmin-module-fdisk \
                      webmin-module-raid \
                      webmin-module-samba \
+                     webmin-module-servers \
                      webmin-module-proftpd \
                      webmin-module-exports \
                      webmin-module-init \
                      webmin-module-net \
-                     webmin-module-webmin"
+                     webmin-module-webmin \
+                     webmin-module-useradmin \
+                     webmin-module-time \
+                     webmin-module-webmincron"
 
 inherit core-image
