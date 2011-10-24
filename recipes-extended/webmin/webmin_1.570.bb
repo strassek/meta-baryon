@@ -9,13 +9,16 @@ RDEPENDS_${PN} += "perl-module-warnings perl-module-warnings-register perl-modul
 RDEPENDS_${PN} += "perl-module-fcntl perl-module-tie-hash perl-module-vars perl-module-time-local perl-module-config perl-module-constant"
 RDEPENDS_${PN} += "perl-module-file perl-module-file-glob perl-module-sdbm perl-module-sdbm-file"
 
-PR = "r2"
+PR = "r3"
 
 SRC_URI = "${SOURCEFORGE_MIRROR}/webadmin/webmin-${PV}.tar.gz \
           file://setup.sh \
           file://init-exclude.patch \
           file://net-generic.patch \
-          file://fdisk-partprobe-fix.patch"
+          file://fdisk-partprobe-fix.patch \
+          file://remove-startup-option.patch \
+          file://disable-version-check.patch \
+          file://mount-excludefs.patch"
 
 inherit allarch perlnative update-rc.d
 
@@ -35,13 +38,15 @@ do_configure() {
     mv init/config-debian-linux init/config-generic-linux
     sed -i "s/shutdown_command=.*/shutdown_command=poweroff/" init/config-generic-linux
     echo "exclude=bootmisc.sh,single,halt,reboot,hostname.sh,modutils.sh,mountall.sh,mountnfs.sh,networking,populate-volatile.sh,rmnologin.sh,save-rtc.sh,umountfs,umountnfs.sh,hwclock.sh,checkroot.sh,banner.sh,udev,udev-cache,devpts.sh,psplash.sh,sendsigs,fbsetup,bootlogd,stop-bootlogd,sysfs.sh,syslog,syslog.busybox,urandom,webmin" >> init/config-generic-linux
+    echo "excludefs=devpts,devtmpfs,usbdevfs,proc,tmpfs,sysfs" >> mount/config-generic-linux
 
     # Fix insane naming that causes problems at packaging time (must be done before deleting below)
     find . -name "*\**" -exec rename \* ALL {} \;
 
     # Remove some other files we don't need
     find . -name "config-*" -a \! -name "config-generic-linux" -a \! -name "config-ALL-linux" -a \! -name "*.pl" -delete
-    rm -f webmin-gentoo-init
+    find . -regextype posix-extended -regex ".*/(openserver|aix|osf1|osf|openbsd|netbsd|freebsd|unixware|solaris|macos|irix|hpux|cygwin|windows)-lib\.pl" -delete
+    rm -f webmin-gentoo-init webmin-caldera-init webmin-debian-pam webmin-pam
 
     # Don't need these at runtime (and we have our own setup script)
     rm -f setup.sh
