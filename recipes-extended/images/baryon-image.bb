@@ -6,6 +6,7 @@ POKY_EXTRA_INSTALL = "samba procps mdadm e2fsprogs-mke2fs util-linux \
                      webmin-module-proc \
                      webmin-module-mount \
                      webmin-module-fdisk \
+                     webmin-module-lvm \
                      webmin-module-raid \
                      webmin-module-samba \
                      webmin-module-servers \
