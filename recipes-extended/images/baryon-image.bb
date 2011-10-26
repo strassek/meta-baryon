@@ -18,6 +18,7 @@ POKY_EXTRA_INSTALL = "samba procps mdadm e2fsprogs-mke2fs util-linux \
                      webmin-module-useradmin \
                      webmin-module-time \
                      webmin-module-webmincron \
+                     webmin-module-mediatomb \
                      webmin-notice \
                      mediatomb \
                      proftpd"

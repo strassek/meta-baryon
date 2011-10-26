@@ -21,7 +21,8 @@ SRC_URI = "${SOURCEFORGE_MIRROR}/webadmin/webmin-${PV}.tar.gz \
           file://nfs-export.patch \
           file://mount-excludefs.patch \
           file://samba-config-fix.patch \
-          file://proftpd-config-fix.patch"
+          file://proftpd-config-fix.patch \
+          file://media-tomb.patch"
 
 inherit allarch perlnative update-rc.d
 
