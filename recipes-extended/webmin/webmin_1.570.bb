@@ -9,7 +9,7 @@ RDEPENDS_${PN} += "perl-module-warnings perl-module-warnings-register perl-modul
 RDEPENDS_${PN} += "perl-module-fcntl perl-module-tie-hash perl-module-vars perl-module-time-local perl-module-config perl-module-constant"
 RDEPENDS_${PN} += "perl-module-file perl-module-file-glob perl-module-sdbm perl-module-sdbm-file perl-module-timelocal"
 
-PR = "r4"
+PR = "r5"
 
 SRC_URI = "${SOURCEFORGE_MIRROR}/webadmin/webmin-${PV}.tar.gz \
           file://setup.sh \
@@ -18,6 +18,7 @@ SRC_URI = "${SOURCEFORGE_MIRROR}/webadmin/webmin-${PV}.tar.gz \
           file://fdisk-partprobe-fix.patch \
           file://remove-startup-option.patch \
           file://disable-version-check.patch \
+          file://nfs-export.patch \
           file://mount-excludefs.patch"
 
 inherit allarch perlnative update-rc.d
