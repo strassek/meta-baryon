@@ -1,8 +1,7 @@
 DESCRIPTION = "Hierarchical, reference counted memory pool system with destructors"
 HOMEPAGE = "http://talloc.samba.org"
 LICENSE = "LGPL"
-
-LIC_FILES_CHKSUM = "file://talloc.h;endline=28;md5=1ea2e80860edd8cf35efa7fe268cf550"
+LIC_FILES_CHKSUM = "file://NEWS;md5=5fe776b23a711c9153ee94bc87e47334"
 
 inherit autotools pkgconfig
 
@@ -12,7 +11,7 @@ SRC_URI[sha256sum] = "5b810527405f29d54f50efd78bf2c89e318f2cd8bed001f22f2a1412fd
 
 TARGET_CC_ARCH += "${LDFLAGS}"
 
-PR = "r0"
+PR = "r1"
 
 # autoreconf doesn't work well while reconfiguring included libreplace
 do_configure () {
