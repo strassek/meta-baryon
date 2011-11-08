@@ -1,5 +1,13 @@
-Index: webmin-1.570/mount/index.cgi
-===================================================================
+Add excludefs config option to mount module
+
+Adds a configuration option (currently hidden) to allow the distro to
+hide certain filesystems from the mount module within Webmin (e.g. /dev)
+since these shouldn't be modified from the web interface.
+
+Signed-off-by: Paul Eggleton <paul.eggleton@linux.intel.com>
+
+Upstream-status: Pending
+
 --- webmin-1.570.orig/mount/index.cgi
 +++ webmin-1.570/mount/index.cgi
 @@ -33,10 +33,12 @@ elsif ($config{'sort_mode'} == 1) {
