@@ -9,7 +9,7 @@ PR = "r3"
 
 # dvhart - bad URL, trying a new one - note: 1.0.13 exists
 #SRC_URI = "http://user.cs.tu-berlin.de/~jutta/gsm/gsm-${PV}.tar.gz
-SRC_URI = " http://www.imagemagick.org/download/delegates/ffmpeg/gsm-1.0.12.tar.gz \
+SRC_URI = "http://www.quut.com/gsm/gsm-${PV}.tar.gz \
 	   file://01_makefile.patch \
            file://02_cplusplus.patch \
            file://03_config.patch \
