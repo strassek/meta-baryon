@@ -1,6 +1,6 @@
 IMAGE_FEATURES = "nfs-server package-management ssh-server-dropbear debug-tweaks"
 
-POKY_EXTRA_INSTALL = "samba procps mdadm e2fsprogs-mke2fs util-linux \
+CORE_IMAGE_EXTRA_INSTALL = "samba procps mdadm e2fsprogs-mke2fs util-linux \
                      webmin \
                      webmin-module-status \
                      webmin-module-proc \
