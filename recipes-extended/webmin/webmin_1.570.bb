@@ -25,6 +25,9 @@ SRC_URI = "${SOURCEFORGE_MIRROR}/webadmin/webmin-${PV}.tar.gz \
           file://net-lib.pl.patch \
           file://media-tomb.patch"
 
+SRC_URI[md5sum] = "20b4f488637366c39458b9b93162eff3"
+SRC_URI[sha256sum] = "3b8ad51dee0e61e330c8137b3d8cff91a00cf31d710b68e272fe02db25baaf54"
+
 inherit allarch perlnative update-rc.d
 
 do_configure() {
