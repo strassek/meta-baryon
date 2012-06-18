@@ -1,4 +1,4 @@
 # Set a hostname
-hostname = "baryon"
+hostname_baryon = "baryon"
 
-PRINC = "1"
+PRINC = "2"
