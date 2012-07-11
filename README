@@ -27,6 +27,30 @@ to yocto@yoctoproject.org with '[meta-baryon]' in the subject.
 
 
 
+Building the meta-baryon layer
+------------------------------
+
+After you download meta-baryon, be sure to add its location to bblayers.conf.
+
+The meta-baryon layer uses the 'lame' package, which has a license that
+must be whitelisted by adding the string "commercial" to the
+LICENSE_FLAGS_WHITELIST variable in your local.conf. For example:
+
+  LICENSE_FLAGS_WHITELIST = "commercial"
+
+Optionally, you can set the DISTRO flag to both identify the image as Baryon 
+and cut down DISTRO_FEATURES to something more appropriate for a headless NAS 
+type device. For example:
+
+  DISTRO = "baryon"
+
+You should then be able to build the image as such:
+
+  $ . ./oe-init-build-env
+  $ bitbake baryon-image
+
+
+
 License
 -------
 
