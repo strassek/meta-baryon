@@ -1,6 +1,8 @@
 IMAGE_FEATURES = "nfs-server package-management ssh-server-dropbear debug-tweaks"
 
-CORE_IMAGE_EXTRA_INSTALL = "samba procps mdadm e2fsprogs-mke2fs util-linux \
+inherit core-image
+
+IMAGE_INSTALL += "samba procps mdadm e2fsprogs-mke2fs util-linux \
                      webmin \
                      webmin-module-status \
                      webmin-module-proc \
@@ -23,4 +25,3 @@ CORE_IMAGE_EXTRA_INSTALL = "samba procps mdadm e2fsprogs-mke2fs util-linux \
                      mediatomb \
                      proftpd"
 
-inherit core-image
