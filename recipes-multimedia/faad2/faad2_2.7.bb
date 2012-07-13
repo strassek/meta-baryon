@@ -3,7 +3,6 @@ SECTION = "libs"
 LICENSE = "GPLv2+"
 LIC_FILES_CHKSUM = "file://COPYING;md5=381c8cbe277a7bc1ee2ae6083a04c958 \
                     file://README;beginline=19;endline=40;md5=79929d64a69b0588ba8445f6eea56913"
-PRIORITY = "optional"
 
 PR = "r2"
 

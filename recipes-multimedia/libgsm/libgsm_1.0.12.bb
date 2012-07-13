@@ -1,6 +1,5 @@
 DESCRIPTION = "GSM Audio Library"
 SECTION = "libs"
-PRIORITY = "optional"
 #DEPENDS = ""
 LICENSE = "libgsm"
 LIC_FILES_CHKSUM = "file://README;md5=f0ab53a6be4aefa9705f39b4bdafd62a"

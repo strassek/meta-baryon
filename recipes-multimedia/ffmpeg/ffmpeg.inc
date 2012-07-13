@@ -2,7 +2,6 @@ DESCRIPTION = "FFmpeg is a complete solution to record, convert and stream audio
 HOMEPAGE = "http://ffmpeg.mplayerhq.hu/"
 AUTHOR = "Fabrice Bellard ffmpeg-devel@mplayerhq.hu"
 SECTION = "libs"
-PRIORITY = "optional"
 LICENSE = "GPLv2+ & LGPLv2.1+"
 
 ARM_INSTRUCTION_SET = "arm"
