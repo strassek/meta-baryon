@@ -33,9 +33,10 @@ inherit allarch perlnative update-rc.d
 do_configure() {
     # Remove binaries and plugins for other platforms
     rm -rf acl/Authen-SolarisRBAC-0.1*
-    rm -rf {format,{bsd,hpux,sgi}exports,zones,rbac,smf,ipfw,ipfilter,dfsadmin}
-    rm -f mount/{free,net,open}bsd-mounts*
-    rm -f mount/macos-mounts*
+    rm -rf format bsdexports hpuxexports sgiexports
+    rm -rf zones rbac smf ipfw ipfilter dfsadmin
+    rm -f mount/freebsd-mounts* mount/netbsd-mounts*
+    rm -f mount/openbsd-mounts* mount/macos-mounts*
 
     # Remove some plugins for the moment
     rm -rf lilo frox wuftpd telnet pserver cpan shorewall webalizer cfengine fsdump pap
