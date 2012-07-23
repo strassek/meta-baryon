@@ -9,7 +9,7 @@ RDEPENDS_${PN} += "perl-module-warnings perl-module-warnings-register perl-modul
 RDEPENDS_${PN} += "perl-module-fcntl perl-module-tie-hash perl-module-vars perl-module-time-local perl-module-config perl-module-constant"
 RDEPENDS_${PN} += "perl-module-file perl-module-file-glob perl-module-file-copy perl-module-sdbm perl-module-sdbm-file perl-module-timelocal perl-module-feature"
 
-PR = "r8"
+PR = "r9"
 
 SRC_URI = "${SOURCEFORGE_MIRROR}/webadmin/webmin-${PV}.tar.gz \
           file://setup.sh \
@@ -53,7 +53,11 @@ do_configure() {
     sed -i "s/netstd_nfs/nfsserver/" exports/config-generic-linux
 
     # Fix insane naming that causes problems at packaging time (must be done before deleting below)
-    find . -name "*\**" -exec rename \* ALL {} \;
+    find . -name "*\**" | while read from
+    do
+        to=`echo "$from" | sed "s/*/ALL/"`
+        mv "$from" "$to"
+    done
 
     # Remove some other files we don't need
     find . -name "config-*" -a \! -name "config-generic-linux" -a \! -name "config-ALL-linux" -a \! -name "*.pl" -delete
