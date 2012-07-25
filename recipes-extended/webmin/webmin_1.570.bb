@@ -9,7 +9,7 @@ RDEPENDS_${PN} += "perl-module-warnings perl-module-warnings-register perl-modul
 RDEPENDS_${PN} += "perl-module-fcntl perl-module-tie-hash perl-module-vars perl-module-time-local perl-module-config perl-module-constant"
 RDEPENDS_${PN} += "perl-module-file perl-module-file-glob perl-module-file-copy perl-module-sdbm perl-module-sdbm-file perl-module-timelocal perl-module-feature"
 
-PR = "r9"
+PR = "r10"
 
 SRC_URI = "${SOURCEFORGE_MIRROR}/webadmin/webmin-${PV}.tar.gz \
           file://setup.sh \
@@ -50,7 +50,8 @@ do_configure() {
     echo "excludefs=devpts,devtmpfs,usbdevfs,proc,tmpfs,sysfs" >> mount/config-generic-linux
 
     mv exports/config-debian-linux exports/config-generic-linux
-    sed -i "s/netstd_nfs/nfsserver/" exports/config-generic-linux
+    sed -i "s/killall -HUP rpc.nfsd && //" exports/config-generic-linux
+    sed -i "s/netstd_nfs/nfsserver/g" exports/config-generic-linux
 
     # Fix insane naming that causes problems at packaging time (must be done before deleting below)
     find . -name "*\**" | while read from
