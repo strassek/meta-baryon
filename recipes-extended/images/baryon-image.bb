@@ -22,6 +22,7 @@ IMAGE_INSTALL += "samba procps mdadm e2fsprogs-mke2fs util-linux \
                      webmin-module-webmincron \
                      webmin-module-mediatomb \
                      webmin-notice \
+                     webmin-module-acl \
                      mediatomb \
                      proftpd"
 
