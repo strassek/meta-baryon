@@ -123,17 +123,17 @@ RRECOMMENDS_webmin-module-fdisk = "parted"
 RRECOMMENDS_webmin-module-lvm = "lvm2"
 
 python populate_packages_prepend() {
-	import os, os.path
+    import os, os.path
 
-	wadir = bb.data.expand('${libexecdir}/webmin', d)
-	wadir_image = bb.data.expand('${D}', d) + wadir
-	modules = []
-	for mod in os.listdir(wadir_image):
-		modinfo = os.path.join(wadir_image, mod, "module.info")
-		if os.path.exists(modinfo):
-			modules.append(mod)
-	
-	do_split_packages(d, wadir, '^(%s)$' % "|".join(modules), 'webmin-module-%s', 'Webmin module for %s', allow_dirs=True, prepend=True)
+    wadir = bb.data.expand('${libexecdir}/webmin', d)
+    wadir_image = bb.data.expand('${D}', d) + wadir
+    modules = []
+    for mod in os.listdir(wadir_image):
+        modinfo = os.path.join(wadir_image, mod, "module.info")
+        if os.path.exists(modinfo):
+            modules.append(mod)
+
+    do_split_packages(d, wadir, '^(%s)$' % "|".join(modules), 'webmin-module-%s', 'Webmin module for %s', allow_dirs=True, prepend=True)
 }
 
 # Time-savers
