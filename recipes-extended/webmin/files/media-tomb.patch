@@ -4,7 +4,7 @@ diff -Nru webmin-1.570.bak/mediatomb/index.cgi webmin-1.570/mediatomb/index.cgi
 @@ -0,0 +1,13 @@
 +#!/usr/bin/perl
 +# index.cgi
-+# Display Media Tomb option categories
++# Display MediaTomb option categories
 +
 +require './mediatomb-lib.pl';
 +
@@ -19,15 +19,15 @@ diff -Nru webmin-1.570.bak/mediatomb/lang/en webmin-1.570/mediatomb/lang/en
 --- webmin-1.570.bak/mediatomb/lang/en	1969-12-31 16:00:00.000000000 -0800
 +++ webmin-1.570/mediatomb/lang/en	2011-10-26 10:01:13.340522186 -0700
 @@ -0,0 +1,2 @@
-+index_title=Media Tomb
-+index_desc=Media Tomb is an open source (GPL) UPnP MediaServer with a nice web user interface. You could access it via <a href='http://$1:49153'>here</a>.
++index_title=MediaTomb
++index_desc=MediaTomb is an open source (GPL) UPnP MediaServer with a nice web user interface. You can access it via <a href='http://$1:49153'>here</a>.
 diff -Nru webmin-1.570.bak/mediatomb/mediatomb-lib.pl webmin-1.570/mediatomb/mediatomb-lib.pl
 --- webmin-1.570.bak/mediatomb/mediatomb-lib.pl	1969-12-31 16:00:00.000000000 -0800
 +++ webmin-1.570/mediatomb/mediatomb-lib.pl	2011-10-26 10:01:34.692522079 -0700
 @@ -0,0 +1,31 @@
 +#!/usr/bin/perl
 +# mediatomb-lib.pl
-+# Common functions for the Media Tomb
++# Common functions for the MediaTomb module
 +
 +BEGIN { push(@INC, ".."); };
 +use WebminCore;
@@ -60,6 +60,6 @@ diff -Nru webmin-1.570.bak/mediatomb/module.info webmin-1.570/mediatomb/module.i
 --- webmin-1.570.bak/mediatomb/module.info	1969-12-31 16:00:00.000000000 -0800
 +++ webmin-1.570/mediatomb/module.info	2011-10-26 09:59:50.428528369 -0700
 @@ -0,0 +1,3 @@
-+desc=Media Tomb
++desc=MediaTomb
 +category=others
-+longdesc=Media Tomb for Yocto
++longdesc=MediaTomb access module
