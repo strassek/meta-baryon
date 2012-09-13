@@ -2,17 +2,18 @@ DESCRIPTION = "Secure ftp daemon"
 SECTION = "console/network"
 
 LICENSE = "GPLv2+"
-LIC_FILES_CHKSUM = "file://COPYING;md5=fdedcde17b1ffd967d86c20fe0ac158a"
+LIC_FILES_CHKSUM = "file://COPYING;md5=fb0d1484d11915fa88a6a7702f1dc184"
 
 PR = "r0"
 
 SRC_URI = "ftp://ftp.proftpd.org/distrib/source/${PN}-${PV}.tar.gz \
 	file://make.patch \
 	file://basic.conf.patch \
+	file://contrib.patch \
 	"
 
-SRC_URI[md5sum] = "4f2c554d6273b8145095837913ba9e5d"
-SRC_URI[sha256sum] = "44be095ed063df93278928cf665ad7b9b38e2c8d0cca97fb51307ec3a390a591"
+SRC_URI[md5sum] = "0871e0b93c9c3c88ca950b6d9a04aed2"
+SRC_URI[sha256sum] = "9f659585cea90fc6af34a0ffae4a90e4ed37abe92dbd9b6c311f95a436c961cb"
 
 EXTRA_OECONF = "ac_cv_func_setpgrp_void=yes ac_cv_func_setgrent_void=yes --disable-cap"
 LDFLAGS += "-Llib"
