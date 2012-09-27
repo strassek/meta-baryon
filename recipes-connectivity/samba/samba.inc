@@ -70,6 +70,8 @@ do_install_append() {
 	mkdir -p ${D}${base_sbindir}
 	rm -f ${D}${bindir}/*.old
 	rm -f ${D}${sbindir}/*.old
+	rmdir ${D}${libdir}/idmap ${D}${libdir}/nss_info ${D}${libdir}/perfcount
+	rmdir ${D}${libdir}/pdb ${D}${libdir}/rpc ${D}${libdir}/gpext
 	[ -f ${D}${sbindir}/mount.cifs ] && mv ${D}${sbindir}/mount.cifs ${D}${base_sbindir}/
 	[ -f ${D}${sbindir}/umount.cifs ] && mv ${D}${sbindir}/umount.cifs ${D}${base_sbindir}/
 
