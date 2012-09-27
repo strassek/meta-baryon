@@ -35,6 +35,7 @@ do_configure () {
 
 do_install () {
     oe_runmake DESTDIR=${D} install
+    rmdir ${D}${libexecdir} ${D}${libdir}/proftpd ${D}${datadir}/locale
 }
 
 pkg_postinst () {
