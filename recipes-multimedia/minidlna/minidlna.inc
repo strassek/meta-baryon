@@ -1,4 +1,4 @@
-DESCRIPTION = "MiniDLNA (aka ReadyDLNA) is server software with the aim of being fully compliant with DLNA/UPnP-AV clients."
+DESCRIPTION = "lightweight DLNA/UPnP-AV server targeted at embedded systems."
 HOMEPAGE = "http://minidlna.sourceforge.net/"
 LICENSE = "GPLv2 BSD-3-Clause"
 LIC_FILES_CHKSUM = "file://LICENCE;md5=b1a795ac1a06805cf8fd74920bc46b5c \

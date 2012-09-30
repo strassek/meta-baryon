@@ -1,0 +1,778 @@
+diff --git a/minidlna/config b/minidlna/config
+new file mode 100644
+index 0000000..4d889c4
+--- /dev/null
++++ b/minidlna/config
+@@ -0,0 +1 @@
++minidlna_conf=/etc/minidlna.conf
+diff --git a/minidlna/config.info b/minidlna/config.info
+new file mode 100644
+index 0000000..8a2fbd0
+--- /dev/null
++++ b/minidlna/config.info
+@@ -0,0 +1 @@
++minidlna_conf=MiniDLNA configuration file,8
+diff --git a/minidlna/edit.cgi b/minidlna/edit.cgi
+new file mode 100755
+index 0000000..61ac054
+--- /dev/null
++++ b/minidlna/edit.cgi
+@@ -0,0 +1,61 @@
++#!perl
++# Show a form to create or edit a minidlna options
++require 'minidlna-lib.pl';
++ReadParse();
++
++# Show page header and get the site being edited
++my $option;
++if ($in{'new'}) {
++	ui_print_header(undef, $text{'create_title'}, "");
++	$option = { };
++	}
++else {
++	ui_print_header(undef, $text{'edit_title'}, "");
++	my @sites = list_minidlna_options();
++	
++
++ 	
++	($option) = grep { $_->{'line'} eq $in{'line'} } @sites;
++ 	
++	
++
++
++	}
++
++# Generate form and inputs table start
++print ui_form_start('save.cgi');
++print ui_hidden('new', $in{'new'});
++print ui_hidden('old', $in{'line'});
++
++# Used to store linenumbers:
++print ui_hidden('line', $option->{'line'});
++
++print ui_table_start($text{'edit_header'}, undef, 2);
++
++# Input for option name
++print ui_table_row($text{'edit_option'},
++	ui_textbox('optiondsc', $option->{'optiondsc'}, 40));
++
++# Input for option parameter 
++print ui_table_row($text{'edit_parameter'},
++	ui_textbox('optionpar', $option->{'optionpar'}, 40));
++
++#Lines used for debuging:
++#print ui_table_row($text{'edit_parameter'},
++#	ui_textbox('line', $option->{'line'}, 40));
++
++
++# Show buttons at the end of the form
++print ui_table_end();
++if ($in{'new'}) {
++	print ui_form_end([ [ undef, $text{'create'} ] ]);
++	}
++else {
++	print ui_form_end([ [ undef, $text{'save'} ],
++			    [ 'delete', $text{'delete'} ] ]);
++	}
++
++
++
++ui_print_footer('', $text{'index_return'});
++
+diff --git a/minidlna/index.cgi b/minidlna/index.cgi
+new file mode 100755
+index 0000000..19e8627
+--- /dev/null
++++ b/minidlna/index.cgi
+@@ -0,0 +1,47 @@
++#!/usr/bin/perl
++# Show all minidlna options
++
++require 'minidlna-lib.pl';
++
++ui_print_header(undef, $module_info{'desc'}, "", undef, 1, 1);
++
++# Build table contents
++my @sites = list_minidlna_options();
++my @table = ( );
++foreach my $s (@sites) {
++	push(@table, [ "<a href='edit.cgi?line=".urlize($s->{'line'}).
++		       "'>".html_escape($s->{'optiondsc'})."</a>",
++		       html_escape($s->{'optionpar'}), html_escape($s->{'enab'})
++		     ]);
++	}
++
++# Show the table with add links
++print ui_form_columns_table(
++	undef,
++	undef,
++	0,
++	[ [ 'edit.cgi?new=1', $text{'index_add'} ] ],
++	undef,
++	[ $text{'index_option'}, $text{'index_parameter'}, $text{'index_enabled'}],
++	100,
++	\@table,
++	undef,
++	100,
++	undef,
++	
++	);
++
++#print ui_table_start($text{'button_header'}, undef, 2);
++
++#print ui_table_end();
++print ui_form_start('restart.cgi');;
++print ui_form_end([ [ 'restart', $text{'restart_button'} ],
++			    [ 'rescan', $text{'rescan_button'} ] ]);
++#print ui_form_end([ [ 'restart', $text{'restart'} ], [ 'rescan', $text{'rescan'} ]  ]);
++
++
++
++
++
++
++ui_print_footer('/', $text{'index'});
+diff --git a/minidlna/install_check.pl b/minidlna/install_check.pl
+new file mode 100755
+index 0000000..188eb51
+--- /dev/null
++++ b/minidlna/install_check.pl
+@@ -0,0 +1,23 @@
++
++do 'minidlna-lib.pl';
++
++=head2 is_installed(mode)
++
++For mode 1, returns 2 if minidlna is installed and configured for use by
++Webmin, 1 if installed but not configured, or 0 otherwise.
++For mode 0, returns 1 if installed, 0 if not
++
++=cut
++sub is_installed
++{
++my ($mode) = @_;
++
++# This is the code that you'd want if the Foobar webserver really existed
++if (-r $config{'minidlna_conf'}) {
++	return $mode + 1;
++	}
++return 0;
++
++#return $mode + 1;
++}
++
+diff --git a/minidlna/lang/.svn/all-wcprops b/minidlna/lang/.svn/all-wcprops
+new file mode 100644
+index 0000000..91d4f34
+--- /dev/null
++++ b/minidlna/lang/.svn/all-wcprops
+@@ -0,0 +1,17 @@
++K 25
++svn:wc:ra_dav:version-url
++V 46
++/svnroot/minidlnawebmin/!svn/ver/23/trunk/lang
++END
++en
++K 25
++svn:wc:ra_dav:version-url
++V 49
++/svnroot/minidlnawebmin/!svn/ver/23/trunk/lang/en
++END
++no
++K 25
++svn:wc:ra_dav:version-url
++V 49
++/svnroot/minidlnawebmin/!svn/ver/23/trunk/lang/no
++END
+diff --git a/minidlna/lang/.svn/entries b/minidlna/lang/.svn/entries
+new file mode 100644
+index 0000000..07a605f
+--- /dev/null
++++ b/minidlna/lang/.svn/entries
+@@ -0,0 +1,96 @@
++10
++
++dir
++24
++https://minidlnawebmin.svn.sourceforge.net/svnroot/minidlnawebmin/trunk/lang
++https://minidlnawebmin.svn.sourceforge.net/svnroot/minidlnawebmin
++
++
++
++2010-02-07T20:35:39.513706Z
++23
++stedy6
++
++
++
++
++
++
++
++
++
++
++
++
++
++
++6ca587f5-de1c-41ef-a14b-7214ca406772
++
++en
++file
++
++
++
++
++2010-03-13T12:39:50.000000Z
++d65c5a49c4d35c88fdfee9d016f4fdcd
++2010-02-07T20:35:39.513706Z
++23
++stedy6
++
++
++
++
++
++
++
++
++
++
++
++
++
++
++
++
++
++
++
++
++
++677
++
++no
++file
++
++
++
++
++2010-03-13T12:39:50.000000Z
++d1be417e31181206090560278316c78b
++2010-02-07T20:35:39.513706Z
++23
++stedy6
++
++
++
++
++
++
++
++
++
++
++
++
++
++
++
++
++
++
++
++
++
++712
++
+diff --git a/minidlna/lang/.svn/text-base/en.svn-base b/minidlna/lang/.svn/text-base/en.svn-base
+new file mode 100644
+index 0000000..f82f55c
+--- /dev/null
++++ b/minidlna/lang/.svn/text-base/en.svn-base
+@@ -0,0 +1,23 @@
++index_option=MiniDlna option
++index_parameter=MiniDlna parameter
++index_none=None options is set.
++index_add=Add a new option.
++index_return=Option list
++index_enabled=Enabled
++
++edit_title=Edit Option
++create_title=Create options
++edit_header=MiniDlna option details
++edit_option=MiniDlna option
++edit_parameter=Option Parameter
++button_header=Restart server
++restart_button=Restart
++rescan_button=Rescan
++save_err=Failed to save
++save_edomain=Missing or invalid domain name
++save_edirectory=Directory must be an absolute path
++save_edirectory2=Directory does not exist
++save_egone=Website no longer exists
++log_create=Created option $1
++log_modify=Modified option $1
++log_delete=Deleted option $1
+diff --git a/minidlna/lang/.svn/text-base/no.svn-base b/minidlna/lang/.svn/text-base/no.svn-base
+new file mode 100644
+index 0000000..bf53f3d
+--- /dev/null
++++ b/minidlna/lang/.svn/text-base/no.svn-base
+@@ -0,0 +1,24 @@
++index_option=MiniDlna valg
++index_parameter=MiniDlna parametre
++index_none=Ingen parametere er tilgjenngelig.
++index_add=Legg til nytt parameter.
++index_return=Parameter liste
++index_enabled=Aktiv
++
++edit_title=Endre parametre
++create_title=Legg til valg
++edit_header=MiniDlna parameter detaljer
++edit_option=MiniDlna valg
++edit_parameter=Option Parameter
++button_header=Omstart av server
++restart_button=Omstart
++rescan_button=Rescan
++save_err=Kunne ikke lagre
++save_edomain=Missing or invalid domain name
++save_edirectory=Directory must be an absolute path
++save_edirectory2=Directory does not exist
++save_egone=Website no longer exists
++
++log_create=Created website $1
++log_modify=Modified website $1
++log_delete=Deleted website $1
+diff --git a/minidlna/lang/en b/minidlna/lang/en
+new file mode 100644
+index 0000000..f82f55c
+--- /dev/null
++++ b/minidlna/lang/en
+@@ -0,0 +1,23 @@
++index_option=MiniDlna option
++index_parameter=MiniDlna parameter
++index_none=None options is set.
++index_add=Add a new option.
++index_return=Option list
++index_enabled=Enabled
++
++edit_title=Edit Option
++create_title=Create options
++edit_header=MiniDlna option details
++edit_option=MiniDlna option
++edit_parameter=Option Parameter
++button_header=Restart server
++restart_button=Restart
++rescan_button=Rescan
++save_err=Failed to save
++save_edomain=Missing or invalid domain name
++save_edirectory=Directory must be an absolute path
++save_edirectory2=Directory does not exist
++save_egone=Website no longer exists
++log_create=Created option $1
++log_modify=Modified option $1
++log_delete=Deleted option $1
+diff --git a/minidlna/lang/en~ b/minidlna/lang/en~
+new file mode 100644
+index 0000000..a6090d2
+--- /dev/null
++++ b/minidlna/lang/en~
+@@ -0,0 +1,22 @@
++index_option=MiniDlna option
++index_parameter=MiniDlna parameter
++index_none=None options is set.
++index_add=Add a new option.
++index_return=Option list
++index_enabled=Enabled
++
++edit_title=Edit Option
++create_title=Create options
++edit_header=MiniDlna option details
++edit_option=MiniDlna option
++edit_parameter=Option Parameter
++button_header=Restart server
++restart=restart
++save_err=Failed to save
++save_edomain=Missing or invalid domain name
++save_edirectory=Directory must be an absolute path
++save_edirectory2=Directory does not exist
++save_egone=Website no longer exists
++log_create=Created option $1
++log_modify=Modified option $1
++log_delete=Deleted option $1
+diff --git a/minidlna/lang/no b/minidlna/lang/no
+new file mode 100644
+index 0000000..bf53f3d
+--- /dev/null
++++ b/minidlna/lang/no
+@@ -0,0 +1,24 @@
++index_option=MiniDlna valg
++index_parameter=MiniDlna parametre
++index_none=Ingen parametere er tilgjenngelig.
++index_add=Legg til nytt parameter.
++index_return=Parameter liste
++index_enabled=Aktiv
++
++edit_title=Endre parametre
++create_title=Legg til valg
++edit_header=MiniDlna parameter detaljer
++edit_option=MiniDlna valg
++edit_parameter=Option Parameter
++button_header=Omstart av server
++restart_button=Omstart
++rescan_button=Rescan
++save_err=Kunne ikke lagre
++save_edomain=Missing or invalid domain name
++save_edirectory=Directory must be an absolute path
++save_edirectory2=Directory does not exist
++save_egone=Website no longer exists
++
++log_create=Created website $1
++log_modify=Modified website $1
++log_delete=Deleted website $1
+diff --git a/minidlna/lang/no~ b/minidlna/lang/no~
+new file mode 100644
+index 0000000..7257cc6
+--- /dev/null
++++ b/minidlna/lang/no~
+@@ -0,0 +1,23 @@
++index_option=MiniDlna valg
++index_parameter=MiniDlna parametre
++index_none=Ingen parametere er tilgjenngelig.
++index_add=Legg til nytt parameter.
++index_return=Parameter liste
++index_enabled=Aktiv
++
++edit_title=Endre parametre
++create_title=Legg til valg
++edit_header=MiniDlna parameter detaljer
++edit_option=MiniDlna valg
++edit_parameter=Option Parameter
++button_header=Omstart av server
++restart=omstart
++save_err=Kunne ikke lagre
++save_edomain=Missing or invalid domain name
++save_edirectory=Directory must be an absolute path
++save_edirectory2=Directory does not exist
++save_egone=Website no longer exists
++
++log_create=Created website $1
++log_modify=Modified website $1
++log_delete=Deleted website $1
+diff --git a/minidlna/log_parser.pl b/minidlna/log_parser.pl
+new file mode 100755
+index 0000000..fc66382
+--- /dev/null
++++ b/minidlna/log_parser.pl
+@@ -0,0 +1,16 @@
++# log_parser.pl
++# Functions for parsing this module's logs
++
++do 'minidlna-lib.pl';
++
++=head2 parse_webmin_log(user, script, action, type, object, &params)
++
++Converts logged information from this module into human-readable form
++
++=cut
++sub parse_webmin_log
++{
++my ($user, $script, $action, $type, $object, $p) = @_;
++return &text('log_'.$action, '<tt>'.html_escape($object).'</tt>');
++}
++
+diff --git a/minidlna/minidlna-lib.pl b/minidlna/minidlna-lib.pl
+new file mode 100755
+index 0000000..e18f88d
+--- /dev/null
++++ b/minidlna/minidlna-lib.pl
+@@ -0,0 +1,182 @@
++=head1 minidlna-lib.pl
++
++
++This module is based on the example module foobar. This is an example Webmin module for a
++simple fictional webserver.
++
++
++=cut
++
++use WebminCore;
++
++init_config();
++
++
++
++=head2 list_minidlna_options()
++
++Returns a list of all options in minidlna config file, as hash
++references with C<optiondsc> and C<optionpar> keys.
++
++=cut
++sub list_minidlna_options
++{
++my @rv;
++my $lnum = 0;
++open(CONF, $config{'minidlna_conf'});
++while(<CONF>) {
++	
++	s/\r|\n//g;
++	#s/#.*$//;
++	
++	#my ($enab,$opt,$par)=split(/#/,/\=+/, $_);
++	my ($opt,$par) = split(/\=+/, $_);
++	if ($par && !/^#/) {
++		push(@rv, { 'optiondsc' => $opt,
++			    'optionpar' => $par,
++			    'line' => $lnum,
++			    'enab'=> true });
++		}
++	else  {
++	if ($par && /=/ && !/\+/ &&  !/\*/ ) {
++#		if ($par && !/\+/ &&  !/\*/ ) {
++	push(@rv, { 	    'optiondsc' => $opt,
++			    'optionpar' => $par,
++			    'line' => $lnum,
++			    'enab'=> false });	
++#	}
++	}
++	}	
++	$lnum++;
++	}
++close(CONF);
++return @rv;
++}
++
++=head2 add_new_option(&option)
++
++Adds a new option, specified by the C<option> hash reference parameter, which
++must contain C<optiondsc> and C<optionpar> keys.
++
++=cut
++sub add_new_option
++{
++my ($option) = @_;
++open_tempfile(CONF, ">>$config{'minidlna_conf'}");
++print_tempfile(CONF, $option->{'optiondsc'}."=".$option->{'optionpar'}."\n");
++close_tempfile(CONF);
++}
++
++=head2 modify_option(&option)
++
++Updates a website specified by the C<option> hash reference parameter, which
++must be a modified entry returned from the C<list_minidlna_options> function.
++
++=cut foreign_require('init', 'init-lib.pl');
++
++sub modify_option
++{
++my ($option) = @_;
++my $lref = read_file_lines($config{'minidlna_conf'});
++$lref->[$option->{'line'}] = $option->{'optiondsc'}."=".$option->{'optionpar'};
++flush_file_lines($config{'minidlna_conf'});
++}
++
++=head2 delete_option(&option)
++
++Deletes a website, specified by the C<option> hash reference par foreign_require('init', 'init-lib.pl');
++ameter, which
++must have been one of the elements returned by C<list_minidlna_options>
++
++=cut
++sub delete_option
++{
++my ($option) = @_;
++my $lref = read_file_lines($config{'minidlna_conf'});
++splice(@$lref, $option->{'line'}, 1);
++flush_file_lines($config{'minidlna_conf'});
++}
++
++=head2 apply_configuration()
++
++Signal the  minidlna process to re-read it's configuration files.
++
++=cut
++sub apply_configuration
++{
++my $error = "";
++
++# foreign_require('init', 'init-lib.pl');
++ #init::restart_action(minidlna); 
++#init::stop_action(minidlna);
++#init::start_action(minidlna);
++execute_command('/etc/init.d/minidlna restart', undef, undef,\$error);
++
++
++}
++
++=head2 rescan_mediafiles()
++
++Signal the  minidlna process to re-read all media files.
++
++=cut
++sub rescan_mediafiles
++{
++my $error = "";
++my $option;
++my $db_dir;
++my $command="rm -rf ";
++my $status;
++my @sites = list_minidlna_options();
++
++($option) = grep { ($_->{'optiondsc'} eq 'db_dir') } @sites;
++
++
++# foreign_require('init', 'init-lib.pl');
++
++
++$db_dir= $option->{'optionpar'};
++if ($db_dir eq '')
++{
++$db_dir="/tmp/minidlna";
++}
++
++
++execute_command($command.$db_dir, undef, undef,\$error); 
++#init::restart_action(minidlna);
++execute_command('/etc/init.d/minidlna restart', undef, undef,\$error);
++webmin_log('Rescan', $command.$db_dir,$error);
++
++
++
++
++
++
++
++}
++
++=head2 stop_minidlna()
++
++Signal the  minidlna stop.
++
++=cut
++sub stop_minidlna
++{
++my $error = "";
++
++execute_command('/etc/init.d/minidlna stop', undef, undef,\$error); 
++
++
++
++
++
++
++
++#execute_command('/etc/init.d/minidlna stop', undef, undef,\$error); 
++}
++
++
++
++
++1;
++
+diff --git a/minidlna/module.info b/minidlna/module.info
+new file mode 100644
+index 0000000..a5d0af0
+--- /dev/null
++++ b/minidlna/module.info
+@@ -0,0 +1,3 @@
++desc=MiniDLNA server
++category=servers
++version=0.12
+diff --git a/minidlna/restart.cgi b/minidlna/restart.cgi
+new file mode 100644
+index 0000000..174ee35
+--- /dev/null
++++ b/minidlna/restart.cgi
+@@ -0,0 +1,27 @@
++#!perl
++# Show all minidlna options
++
++# Create, update or delete a minidlna option
++require 'minidlna-lib.pl';
++ReadParse();
++error_setup($text{'save_err'});
++lock_file($config{'minidlna_conf'});
++
++
++if ($in{'restart'}) {
++	# Just restart it
++	apply_configuration();
++	#stop_action(minidlna);
++	#restart_action(minidlna);
++	}
++if ($in{'rescan'}) {
++	# Just restart it
++	#stop_minidlna();	
++	#apply_configuration();	
++	rescan_mediafiles();
++	#apply_configuration();	
++	#stop_action(minidlna);
++	#restart_action(minidlna);
++	}
++
++&redirect('');
+diff --git a/minidlna/save.cgi b/minidlna/save.cgi
+new file mode 100755
+index 0000000..a0bf0de
+--- /dev/null
++++ b/minidlna/save.cgi
+@@ -0,0 +1,54 @@
++#!perl
++# Create, update or delete a minidlna option
++require 'minidlna-lib.pl';
++ReadParse();
++error_setup($text{'save_err'});
++lock_file($config{'minidlna_conf'});
++
++# Get the old site object
++if (!$in{'new'}) {
++	my @sites = list_minidlna_options();
++        ($option) = grep { ($_->{'line'} eq $in{'line'}) } @sites;
++
++	$option || error($text{'save_egone'});
++	}
++
++if ($in{'delete'}) {
++	# Just delete it
++	delete_option($option);
++		
++	}
++
++#if ($in{'restart'}) {
++	# Just restart it
++#	apply_configuration();
++#	}
++else {
++	#removed much off this temporary as i dint know exactly what i does.	
++	# Validate inputs 
++	#$in{'line'} =~ /^[a-z0-9\.\-\_]+$/i ||
++	#	error($text{'save_edomain'});
++	
++	
++	$option->{'optiondsc'} = $in{'optiondsc'};
++	$option->{'optionpar'} = $in{'optionpar'};
++	$option->{'line'} = $in{'line'};
++
++	# Update or create
++	if ($in{'new'}) {
++		add_new_option($option);
++		}
++	else {
++		modify_option($option);
++		}
++	}
++
++# Log the change
++unlock_file($config{'minidlna_conf'});
++apply_configuration();
++webmin_log($in{'new'} ? 'create' :
++	   $in{'delete'} ? 'delete' : 'modify',
++	   'site',
++	   $option->{'optiondsc'});
++&redirect('');
++
+-- 
+1.7.9.5
+
