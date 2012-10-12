@@ -4,6 +4,8 @@ AUTHOR = "Fabrice Bellard ffmpeg-devel@mplayerhq.hu"
 SECTION = "libs"
 LICENSE = "GPLv2+ & LGPLv2.1+"
 
+LICENSE_FLAGS = "commercial"
+
 ARM_INSTRUCTION_SET = "arm"
 
 PE = "2"
