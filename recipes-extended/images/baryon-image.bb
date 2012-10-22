@@ -2,7 +2,7 @@ IMAGE_FEATURES = "nfs-server package-management ssh-server-dropbear debug-tweaks
 
 inherit core-image
 
-IMAGE_INSTALL += "samba procps mdadm e2fsprogs-mke2fs util-linux \
+IMAGE_INSTALL += "samba procps mdadm e2fsprogs-mke2fs parted \
                      webmin \
                      webmin-module-status \
                      webmin-module-proc \
