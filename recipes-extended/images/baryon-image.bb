@@ -1,4 +1,4 @@
-IMAGE_FEATURES = "nfs-server package-management ssh-server-dropbear debug-tweaks"
+IMAGE_FEATURES += "nfs-server package-management ssh-server-dropbear"
 
 inherit core-image
 
