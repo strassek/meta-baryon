@@ -1,55 +1,61 @@
-DESCRIPTION = "Secure ftp daemon"
+SUMMARY = "Secure and configurable FTP server"
 SECTION = "console/network"
-
+HOMEPAGE = "http://www.proftpd.org"
 LICENSE = "GPLv2+"
 LIC_FILES_CHKSUM = "file://COPYING;md5=fb0d1484d11915fa88a6a7702f1dc184"
 
-PR = "r0"
+PR = "r1"
 
 SRC_URI = "ftp://ftp.proftpd.org/distrib/source/${PN}-${PV}.tar.gz \
-	file://make.patch \
-	file://basic.conf.patch \
-	file://contrib.patch \
-	"
+           file://make.patch \
+           file://basic.conf.patch \
+           file://contrib.patch \
+           file://proftpd-basic.init \
+           file://default \
+           "
 
 SRC_URI[md5sum] = "0871e0b93c9c3c88ca950b6d9a04aed2"
 SRC_URI[sha256sum] = "9f659585cea90fc6af34a0ffae4a90e4ed37abe92dbd9b6c311f95a436c961cb"
 
-EXTRA_OECONF = "ac_cv_func_setpgrp_void=yes ac_cv_func_setgrent_void=yes --disable-cap"
-LDFLAGS += "-Llib"
-PARALLEL_MAKE = ""
+inherit autotools useradd update-rc.d
 
+EXTRA_OECONF = "--disable-cap \
+                --disable-auth-pam \
+		"
+
+# proftpd uses libltdl which currently makes configuring using
+# autotools.bbclass a pain...
 do_configure () {
-	 ./configure \
-		   --disable-auth-pam \
-                   --build=${BUILD_SYS} \
-                   --host=${HOST_SYS} \
-                   --target=${TARGET_SYS} \
-                   --prefix=/usr \
-		   --sysconfdir=/etc \
-		   --sharedstatedir=/com \
-		   --localstatedir=/var \
-                   ${EXTRA_OECONF} \
-                   $@;
+	oe_runconf
 }
+
+FTPUSER = "ftp"
+FTPGROUP = "ftp"
 
 do_install () {
-    oe_runmake DESTDIR=${D} install
-    rmdir ${D}${libexecdir} ${D}${libdir}/proftpd ${D}${datadir}/locale
+	oe_runmake DESTDIR=${D} install
+	rmdir ${D}${libexecdir} ${D}${libdir}/proftpd ${D}${datadir}/locale
+	sed -i '/ *User[ \t]*/s/ftp/${FTPUSER}/' ${D}${sysconfdir}/proftpd.conf
+	sed -i '/ *Group[ \t]*/s/ftp/${FTPGROUP}/' ${D}${sysconfdir}/proftpd.conf
+	install -d ${D}${sysconfdir}/init.d
+	install -m 0755 ${WORKDIR}/proftpd-basic.init ${D}${sysconfdir}/init.d/proftpd
+	install -d ${D}${sysconfdir}/default
+	install -m 0755 ${WORKDIR}/default ${D}${sysconfdir}/default/proftpd
 }
 
-pkg_postinst () {
+INITSCRIPT_NAME = "proftpd"
+INITSCRIPT_PARAM = "defaults 85 15"
+
+USERADD_PACKAGES = "${PN}"
+GROUPADD_PARAM_${PN} = "${FTPGROUP}"
+USERADD_PARAM_${PN} = "--system -g ${FTPGROUP} ${FTPUSER}"
+
+pkg_postinst_${PN} () {
     if [ "x$D" != "x" ] ; then
         exit 1
     fi
 
-    # more chown's might be needed
-    chown root:root /usr/sbin/proftpd
-
-    # create the ftp user
-    username='ftp'
-    addgroup ${username}
-    adduser --disabled-password ${username} --ingroup ${username}
-    mkdir -p /home/${username}/pub/
-    chown -R ftp:ftp /home/${username}/pub
+    # create the pub directory
+    mkdir -p /home/${FTPUSER}/pub/
+    chown -R ${FTPUSER}:${FTPGROUP} /home/${FTPUSER}/pub
 }

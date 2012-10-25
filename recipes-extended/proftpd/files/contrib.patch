@@ -1,3 +1,7 @@
+The contrib directory now contains its own Makefile which is
+used during installation. It was required to pass DESTDIR through
+when it gets called from the base Makefile.
+
 Upstream-Status: Pending
 
 Signed-off-by: Kevin Strasser <kevin.strasser@linux.intel.com>

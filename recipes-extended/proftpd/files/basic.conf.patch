@@ -1,6 +1,6 @@
 Upstream-Status: Inappropriate [configuration]
 
-proftpd tris to get the IP address from the hostname.
+proftpd tries to get the IP address from the hostname.
 Unluckily now the hostname is not properly configured in /etc/hosts.
 We can use this patch as a workaround.
 
